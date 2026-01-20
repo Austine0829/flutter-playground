@@ -13,6 +13,10 @@ bool isAdultNormal(int age) {
 
 bool isAdultArrow(int age) => age >= 18 ? true : false;
 
+bool isAdultReqParams({required int age}) {
+  return age >= 18;
+}
+
 void main() {
   int normalResult = addNormal(10, 20);
   int arrowResult = addArrow(20, 40);
@@ -22,4 +26,6 @@ void main() {
 
   print("Is Adult Normal: ${isAdultNormal(18)}");
   print("Is Adult Arrow: ${isAdultArrow(18)}");
+  print("Is Adult Required Parameter: ${isAdultReqParams(age: 17)}");
+
 }
