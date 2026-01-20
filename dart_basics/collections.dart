@@ -1,3 +1,5 @@
+// ignore_for_file: equal_elements_in_set
+
 void main() {
   print("List");
   List<String> names = ["Austine", "Audrey", "Tuazon"];
