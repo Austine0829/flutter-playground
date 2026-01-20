@@ -1,6 +1,3 @@
-
-import 'dart:ffi';
-
 void main() {
   // int x = 10;
   // int y = 20;
@@ -15,4 +12,8 @@ void main() {
   bool isMinor = true;
 
   print(isMinor);
+
+  var anon = 10;
+
+  print(anon);
 }
