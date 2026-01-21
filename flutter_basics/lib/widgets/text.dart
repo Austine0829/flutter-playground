@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 // Stateless Widget
-class MyText extends StatelessWidget {
+class MyTextWidget extends StatelessWidget {
   final String text;
 
-  const MyText({super.key, required this.text });
+  const MyTextWidget({super.key, required this.text });
 
   @override 
   Widget build(BuildContext context) {

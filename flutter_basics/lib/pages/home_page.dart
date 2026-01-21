@@ -11,7 +11,7 @@ class MyHomePage extends StatelessWidget {
         title: const Text("My Flutter App"), 
         centerTitle: true,
         titleTextStyle: const TextStyle(color: Colors.red, fontSize: 22)),
-      body: const MyText(text: "My Flutter App", )
+      body: const MyTextWidget(text: "My Flutter App", )
     );
   }
 }

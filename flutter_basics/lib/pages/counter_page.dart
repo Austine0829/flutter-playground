@@ -24,7 +24,7 @@ class _CounterPageState extends State<CounterPage> {
         Text("Counter: $count"),
         ElevatedButton(
           onPressed: increment, 
-          child: const Text("Press To Increment"))
+          child: const Text("Press To Increment", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.blue)))
       ],
     );
   }
