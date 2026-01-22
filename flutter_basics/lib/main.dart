@@ -22,21 +22,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Flutter App Bar")),
-      body: const SizeBoxPage());
+      body: const CenterPage());
   }
 }
 
-class SizeBoxPage extends StatelessWidget {
-  const SizeBoxPage({super.key});
+class CenterPage extends StatelessWidget {
+  const CenterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Text("Hello Flutter One"),
-        SizedBox(width: 10,),
-        Text("Hello Flutter Two")
-      ],
-    );
+    return const Center(
+        child: Text("Flutter App"));
   }
 }
