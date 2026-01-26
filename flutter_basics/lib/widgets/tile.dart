@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/utils/app_text_theme.dart';
 
 class TileWidget extends StatelessWidget {
   const TileWidget({super.key});
@@ -21,19 +22,8 @@ class TileWidget extends StatelessWidget {
             )
           )
         ),
-      const Text(
-        "Anime",
-        style: TextStyle(
-          color: Colors.white54
-          )
-        ),
-      const Text(
-        "Naruto",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white
-        )
-      )
+      Text("Anime",style: Theme.of(context).textTheme.tileGenre),
+      Text("Naruto",style: Theme.of(context).textTheme.verticalTileTitle)
     ]);
   }
 }

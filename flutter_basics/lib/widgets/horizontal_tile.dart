@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/utils/app_text_theme.dart';
 
 class HorizontalTileWidget extends StatelessWidget {
   const HorizontalTileWidget({super.key});
@@ -21,11 +22,11 @@ class HorizontalTileWidget extends StatelessWidget {
             )
           ),
         const SizedBox(width: 5),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(children: [
-            Text("Naruto", style: TextStyle(color: Colors.white)),
-            Text("Anime", style: TextStyle(color: Colors.white54))
+            Text("Naruto", style: Theme.of(context).textTheme.horizontalTileTitle),
+            Text("Anime", style: Theme.of(context).textTheme.tileGenre)
         ])
       ),
       const Spacer(),
