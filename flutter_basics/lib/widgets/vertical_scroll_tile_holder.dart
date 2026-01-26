@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_basics/widgets/horizontal_tile.dart';
+
+
+class VerticalScrollTileHolderWidget extends StatelessWidget {
+  const VerticalScrollTileHolderWidget({super.key});
+
+  @override 
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: 5,
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        return const HorizontalTileWidget();
+    });
+  }
+}
