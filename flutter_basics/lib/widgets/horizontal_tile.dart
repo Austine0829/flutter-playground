@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/utils/app_text_theme.dart';
+import 'package:flutter_basics/widgets/swipable_menu_sheet.dart';
 
 class HorizontalTileWidget extends StatelessWidget {
   const HorizontalTileWidget({super.key});
@@ -30,7 +31,16 @@ class HorizontalTileWidget extends StatelessWidget {
         ])
       ),
       const Spacer(),
-      IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert, color: Colors.white))
+      IconButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context, 
+            showDragHandle: true,
+            builder: (context) {
+              return const SwipableMenuSheetWidget();
+          });
+        },
+        icon: const Icon(Icons.more_vert, color: Colors.white))
     ]);
   }
 }
