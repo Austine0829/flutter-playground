@@ -7,13 +7,30 @@ class VerticalScrollTileHolderWidget extends StatelessWidget {
 
   @override 
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: 5,
-      shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
-      itemBuilder: (context, index) {
-        return const HorizontalTileWidget();
-    });
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+        ...List.generate(5, (index) => const Padding(
+            padding: EdgeInsets.only(bottom: 8), 
+            child: HorizontalTileWidget()))
+        ]
+      ) 
+    );
   }
 }
+
+// class VerticalScrollTileHolderWidget extends StatelessWidget {
+//   const VerticalScrollTileHolderWidget({super.key});
+
+//   @override 
+//   Widget build(BuildContext context) {
+//     return ListView.separated(
+//       itemCount: 5,
+//       shrinkWrap: true,
+//       physics: const AlwaysScrollableScrollPhysics(),
+//       separatorBuilder: (_, __) => const SizedBox(height: 8),
+//       itemBuilder: (context, index) {
+//         return const HorizontalTileWidget();
+//     });
+//   }
+// }
