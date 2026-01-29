@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/widgets/tile.dart';
+import '../widgets/tile.dart';
 
 class HorizontalScrollTileHolderWidget extends StatelessWidget {
   const HorizontalScrollTileHolderWidget({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/utils/app_text_theme.dart';
+import '../utils/app_text_theme.dart';
 
 class TileWidget extends StatelessWidget {
   const TileWidget({super.key});

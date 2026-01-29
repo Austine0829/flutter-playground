@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/utils/app_text_theme.dart';
-import 'package:flutter_basics/widgets/swipable_menu_sheet.dart';
+import '../utils/app_text_theme.dart';
+import '../widgets/swipable_menu_sheet.dart';
 
 class HorizontalTileWidget extends StatelessWidget {
   const HorizontalTileWidget({super.key});
