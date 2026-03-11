@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/insert_page.dart';
-import 'pages/read_page.dart';
+import 'package:sqlite_basics_2/pages/person/insert_page.dart';
+import 'package:sqlite_basics_2/pages/person/read_page.dart';
+
 
 
 void main() {

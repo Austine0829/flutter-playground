@@ -1,8 +1,17 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as path;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await requestPermissions();
+
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,29 +19,92 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: const MessagePage(),
+      theme: ThemeData(useMaterial3: true),
+      home: const HomePage(),
     );
   }
 }
 
-class MessagePage extends StatelessWidget {
-  const MessagePage({super.key});
+Future<void> requestPermissions() async {
+  await Permission.audio.request();
+  await Permission.storage.request();
+}
 
-  @override 
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class Song {
+  final String path;
+  final String title;
+
+  Song({
+    required this.path,
+    required this.title,
+  });
+}
+
+class _HomePageState extends State<HomePage> {
+
+  List<Song> songs = [];
+  bool isLoading = true;
+
+  Future<List<File>> fastScanMp3() async {
+    final List<String> folders = [
+      "/storage/emulated/0/Music",
+      "/storage/emulated/0/Download",
+    ];
+
+    List<File> songs = [];
+
+    for (var path in folders) {
+      final dir = Directory(path);
+      
+      if (!dir.existsSync()) continue;
+
+      await for (var entity in dir.list(recursive: true)) {
+        if (entity is File && entity.path.endsWith(".mp3")) {
+          songs.add(entity);
+        }
+      }
+    }
+
+    return songs;
+  }
+
+  List<Song> convertSongs(List<File> files) {
+    return files.map((file) {
+      return Song(
+        path: file.path.replaceAll(RegExp(r"_mixed\.mp3$"), ".mp3"),
+        title: path.basename(file.path.replaceAll(RegExp(r'_mixed\.mp3$|.mp3'), ""))
+      );
+    }).toList();
+  } 
+
+  Future<void> init() async {
+    var files = await fastScanMp3();
+    setState(() {
+     songs = convertSongs(files);
+     isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    
+    int index = 50;
+
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Someone Clicked Me! WAAAAAAAAH!"))
-            );
-          }, 
-          child: const Text("Click Me!")),
-      ),
+      body: !isLoading ? Center(child: Text("${songs[index].title} ${songs[index].path}"),) : Center(child: Text("Is Loading"),) 
     );
   }
 }

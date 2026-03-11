@@ -6,14 +6,20 @@ class SwipableMenuSheetWidget extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      expand: false,
+        expand: false,
+        initialChildSize: 1,
         builder: (context, scrollController) {
           return Container(
-            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.lightBlueAccent
+            ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 25
+            ),
             child: ListView(
               controller: scrollController,
               children: const [
-              SizedBox(height: 20),
               Text('More content...'),
             ]
           ),

@@ -16,4 +16,8 @@ void main() {
   var anon = 10;
 
   print(anon);
+
+  final name = "Austine";
+
+  print(name);
 }
