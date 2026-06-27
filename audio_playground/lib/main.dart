@@ -4,7 +4,67 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as p;
+
+import 'package:flutter/services.dart';
+
+class MediaStoreHelper {
+  static const MethodChannel _channel =
+      MethodChannel("com.example.mediastore");
+
+  static Future<List<Map<String, dynamic>>> queryAudioFiles() async {
+    final result = await _channel.invokeMethod("queryAudio");
+
+    final List list = result;
+
+    return list.map((e) => Map<String, dynamic>.from(e)).toList();
+  }
+}
+Future<List<Song>> scanSongs() async {
+  List<Song> songs = [];
+  final audioFiles = await MediaStoreHelper.queryAudioFiles();
+
+  for (var file in audioFiles) {
+    songs.add(
+      Song(
+        title: file["title"], 
+        path: file["path"]
+      )
+    );
+  }
+
+  return songs;
+}
+
+Future<List<File>> scanMp3Songs() async {
+    List<String> paths = [
+      "/storage/emulated/0/Download"
+    ];
+    
+    List<File> songs = [];
+
+    for (var path in paths) {
+      final Directory dir = Directory(path);
+
+      await for (var file in dir.list(recursive: true)) {
+          if (file is File && file.path.endsWith(".mp3")) {
+            songs.add(file);
+          }
+      }
+    }
+
+    return songs;
+  }
+
+
+  List<Song> formatSongs(List<File> files) {
+    return files.map((file) {
+      return Song(
+        path: file.path.replaceAll(RegExp(r"_mixed\.mp3$"), "").trim(),
+        title: p.basename(file.path.replaceAll(RegExp(r"_mixed\.mp3$|.mp3"), ""))
+      );
+    }).toList();
+  }
 
 class Song {
   final String title;
@@ -57,38 +117,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final player = AudioPlayer();
   bool isLoading = true;
 
-  Future<List<File>> scanMp3Songs() async {
-    List<String> paths = [
-      "/storage/emulated/0/Download"
-    ];
-    
-    List<File> songs = [];
-
-    for (var path in paths) {
-      final Directory dir = Directory(path);
-
-      await for (var file in dir.list(recursive: true)) {
-          if (file is File && file.path.endsWith(".mp3")) {
-            songs.add(file);
-          }
-      }
-    }
-
-    return songs;
-  }
-
-  List<Song> formatSongs(List<File> files) {
-    return files.map((file) {
-      return Song(
-        path: file.path.replaceAll(RegExp(r"_mixed\.mp3$"), "").trim(),
-        title: basename(file.path.replaceAll(RegExp(r"_mixed\.mp3$|.mp3"), ""))
-      );
-    }).toList();
-  }
-
   Future<void> init() async {
-    final List<File> files = await scanMp3Songs();
-    List<Song> songs = formatSongs(files);
+    // final List<File> files = await scanMp3Songs();
+    // List<Song> songs = formatSongs(files);
+
+    List<Song> songs = await scanSongs();
 
     final List<AudioSource> playlist = songs.map((song) => AudioSource.file(song.path)).toList();
 
@@ -133,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
            ElevatedButton(
             onPressed: toPrevious, 
-            child: Text("To Previous")
+            child: Text("T0 Previous")
           ),
            ElevatedButton(
             onPressed: toNext, 
